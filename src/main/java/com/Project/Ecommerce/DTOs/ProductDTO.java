@@ -1,4 +1,14 @@
 package com.Project.Ecommerce.DTOs;
 
-public record ProductDTO() {
+import com.Project.Ecommerce.Entities.Product;
+import com.Project.Ecommerce.Repositories.ProductRepository;
+
+public record ProductDTO(Long id, String productName, Double price, Integer stock) {
+    public ProductDTO(Product product){
+        this(
+                product.getId(),
+                product.getProductName(),
+                product.getPrice(),
+                product.getStock());
+    }
 }
