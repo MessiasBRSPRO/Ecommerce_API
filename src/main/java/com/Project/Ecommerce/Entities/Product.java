@@ -17,15 +17,18 @@ public class Product {
 
     private Integer stock;
 
+    private String decription;
+
     public Product(){
 
     }
 
-    public Product(Long id, String productName, Double price, Integer stock){
+    public Product(Long id, String productName, Double price, Integer stock, String decription){
         this.id = id;
         this.productName = productName;
         this.price = price;
         this.stock = stock;
+        this.decription = decription;
 
     }
 
@@ -34,6 +37,7 @@ public class Product {
         this.productName = productDTO.productName();
         this.price = productDTO.price();
         this.stock = productDTO.stock();
+        this.decription = productDTO.decription();
     }
 
     public Long getId() {
@@ -66,5 +70,9 @@ public class Product {
 
     public void setStock(Integer stock) {
         this.stock = stock;
+    }
+
+    public String getDecription() {
+        return this.decription;
     }
 }

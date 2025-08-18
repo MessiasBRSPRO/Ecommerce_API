@@ -1,0 +1,2 @@
+ALTER TABLE products
+ADD COLUMN decription VARCHAR(255);
