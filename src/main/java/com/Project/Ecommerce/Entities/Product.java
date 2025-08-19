@@ -19,17 +19,21 @@ public class Product {
 
     private String decription;
 
+    @ManyToOne
+    @JoinColumn(name = "category_id")
+    private Category category;
+
     public Product(){
 
     }
 
-    public Product(Long id, String productName, Double price, Integer stock, String decription){
+    public Product(Long id, String productName, Double price, Integer stock, String decription, Category category){
         this.id = id;
         this.productName = productName;
         this.price = price;
         this.stock = stock;
         this.decription = decription;
-
+        this.category = category;
     }
 
     public Product(ProductDTO productDTO){
@@ -38,8 +42,16 @@ public class Product {
         this.price = productDTO.price();
         this.stock = productDTO.stock();
         this.decription = productDTO.decription();
+        this.category = productDTO.category();
     }
 
+    public Category getCategory() {
+        return category;
+    }
+
+    public void setCategory(Category category) {
+        this.category = category;
+    }
     public Long getId() {
         return id;
     }
