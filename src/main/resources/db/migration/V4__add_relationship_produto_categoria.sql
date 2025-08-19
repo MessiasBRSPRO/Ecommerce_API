@@ -1,0 +1,8 @@
+ALTER TABLE products ADD COLUMN category_id INTEGER;
+
+ALTER TABLE products
+ADD CONSTRAINT fk_categoria
+FOREIGN KEY (category_id)
+REFERENCES categories(id)
+ON DELETE RESTRICT
+ON UPDATE CASCADE;
