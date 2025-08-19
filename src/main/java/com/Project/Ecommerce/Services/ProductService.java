@@ -7,6 +7,9 @@ import com.Project.Ecommerce.Repositories.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 @Service
@@ -17,6 +20,15 @@ public class ProductService {
 
     public Product createProduct(ProductDTO productDTO){
         return productRepository.save(new Product(productDTO));
+    }
+
+    public Collection<Product> createProduct(Collection<ProductDTO> productDTOs){
+        Collection<Product> productsToAdd = new ArrayList<>();
+        for(ProductDTO productDTO : productDTOs){
+            productsToAdd.add(new Product(productDTO));
+        }
+        return productRepository.saveAll(productsToAdd);
+
     }
 
     public List<DTOListedProduct> allProducts(){

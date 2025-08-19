@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 @RestController
@@ -20,6 +22,12 @@ public class ProductController {
     @PostMapping
     @RequestMapping("/create-product")
     public ResponseEntity<Product> createProductEndpoint(@RequestBody ProductDTO productDTO){
+        return ResponseEntity.ok(productService.createProduct(productDTO));
+    }
+
+    @PostMapping
+    @RequestMapping("/create-products")
+    public ResponseEntity<Collection<Product>> createProductEndpoint(@RequestBody Collection<ProductDTO> productDTO){
         return ResponseEntity.ok(productService.createProduct(productDTO));
     }
 
