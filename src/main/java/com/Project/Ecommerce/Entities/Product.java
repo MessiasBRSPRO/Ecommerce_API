@@ -1,5 +1,6 @@
 package com.Project.Ecommerce.Entities;
 
+import com.Project.Ecommerce.DTOs.DTOUpdatedProduct;
 import com.Project.Ecommerce.DTOs.ProductDTO;
 import jakarta.persistence.*;
 
@@ -45,6 +46,22 @@ public class Product {
         this.category = productDTO.category();
     }
 
+    public void updateProduct(DTOUpdatedProduct updatedProduct){
+        if(updatedProduct.updatedProductName() != null){
+            this.productName = updatedProduct.updatedProductName();
+        }if(updatedProduct.updatedPrice() != null){
+            this.price = updatedProduct.updatedPrice();
+        }if(updatedProduct.id() != null){
+            this.id = updatedProduct.id();
+        }
+        if(updatedProduct.updatedCategory() != null){
+            this.category = updatedProduct.updatedCategory();
+        }
+
+        if(updatedProduct.updatedDecription() != null){
+            this.decription = updatedProduct.updatedDecription();
+        }
+    }
     public Category getCategory() {
         return category;
     }

@@ -2,6 +2,7 @@ package com.Project.Ecommerce.Services;
 
 import com.Project.Ecommerce.DTOs.CategoryDTO;
 import com.Project.Ecommerce.DTOs.DTOListedProduct;
+import com.Project.Ecommerce.DTOs.DTOUpdatedProduct;
 import com.Project.Ecommerce.DTOs.ProductDTO;
 import com.Project.Ecommerce.Entities.Category;
 import com.Project.Ecommerce.Entities.Product;
@@ -45,6 +46,16 @@ public class ProductService {
             }
         }
         return productById;
+    }
 
+    public void deleteProductById(Long id){
+        productRepository.deleteById(id);
+    }
+
+    public DTOUpdatedProduct updateProductInfos(DTOUpdatedProduct productDTO){
+        Product product = productRepository.getReferenceById(productDTO.id());
+        product.updateProduct(productDTO);
+
+        return new DTOUpdatedProduct(product);
     }
 }
