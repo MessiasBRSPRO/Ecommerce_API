@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -35,5 +34,11 @@ public class ProductController {
     @RequestMapping("/all-products")
     public ResponseEntity<List<DTOListedProduct>> allProductsEndpoint(){
         return ResponseEntity.ok(productService.allProducts());
+    }
+
+    @GetMapping
+    @RequestMapping("/all-products/{id}")
+    public ResponseEntity<List<DTOListedProduct>> allProductsEndpoint(@PathVariable Long id){
+        return ResponseEntity.ok().body(productService.allProductsById(id));
     }
 }
