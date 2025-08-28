@@ -6,6 +6,8 @@ import com.Project.Ecommerce.DTOs.DTOUpdatedProduct;
 import com.Project.Ecommerce.DTOs.ProductDTO;
 import com.Project.Ecommerce.Entities.Category;
 import com.Project.Ecommerce.Entities.Product;
+import com.Project.Ecommerce.Exceptions.NoExistentCategoryException;
+import com.Project.Ecommerce.Exceptions.NoExistentProductException;
 import com.Project.Ecommerce.Repositories.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -30,7 +32,6 @@ public class ProductService {
             productsToAdd.add(new Product(productDTO));
         }
         return productRepository.saveAll(productsToAdd);
-
     }
 
     public List<DTOListedProduct> allProducts(){
@@ -45,17 +46,28 @@ public class ProductService {
                 productById.add(product);
             }
         }
+        if(productById.isEmpty()){
+            throw new NoExistentCategoryException("id category don't exist");
+        }
         return productById;
     }
 
     public void deleteProductById(Long id){
-        productRepository.deleteById(id);
+        if(productRepository.existsById(id)){
+            productRepository.deleteById(id);
+        }
+        else{
+            throw new NoExistentProductException("The product don't exists in DataBase");
+        }
     }
 
     public DTOUpdatedProduct updateProductInfos(DTOUpdatedProduct productDTO){
-        Product product = productRepository.getReferenceById(productDTO.id());
-        product.updateProduct(productDTO);
-
-        return new DTOUpdatedProduct(product);
+        if(productRepository.existsById(productDTO.id())){
+            Product product = productRepository.getReferenceById(productDTO.id());
+            product.updateProduct(productDTO);
+            return new DTOUpdatedProduct(product);
+        }else{
+            throw new NoExistentProductException("impossible update a not existent product");
+        }
     }
 }
