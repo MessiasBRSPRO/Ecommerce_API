@@ -7,9 +7,12 @@ import com.Project.Ecommerce.Entities.Product;
 import com.Project.Ecommerce.Services.ProductService;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import java.net.URI;
 import java.util.Collection;
 import java.util.List;
 
@@ -23,15 +26,26 @@ public class ProductController {
     @PostMapping
     @RequestMapping("/create-product")
     @Transactional
+    @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<Product> createProductEndpoint(@RequestBody ProductDTO productDTO){
-        return ResponseEntity.ok(productService.createProduct(productDTO));
+        URI uri = ServletUriComponentsBuilder
+                .fromCurrentRequest()
+                .path("/{id}")
+                .buildAndExpand(productDTO.id())
+                .toUri();
+        return ResponseEntity.created(uri).body(productService.createProduct(productDTO));
     }
 
     @PostMapping
     @RequestMapping("/create-products")
     @Transactional
     public ResponseEntity<Collection<Product>> createProductEndpoint(@RequestBody Collection<ProductDTO> productDTO){
-        return ResponseEntity.ok(productService.createProduct(productDTO));
+        URI uri = ServletUriComponentsBuilder
+                .fromCurrentRequest()
+                .path("/{id}")
+                .buildAndExpand(productDTO)
+                .toUri();
+        return ResponseEntity.created(uri).body(productService.createProduct(productDTO));
     }
 
     @GetMapping
@@ -58,6 +72,6 @@ public class ProductController {
     @RequestMapping("/update-product-information")
     @Transactional
     public ResponseEntity<?> deleteProductByIdEndpoint(@RequestBody DTOUpdatedProduct productDTO){
-        return ResponseEntity.ok().body(productService.updateProductInfos(productDTO));
+        return ResponseEntity.accepted().body(productService.updateProductInfos(productDTO));
     }
 }
