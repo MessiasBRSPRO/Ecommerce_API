@@ -71,7 +71,7 @@ public class ProductController {
     @PutMapping
     @RequestMapping("/update-product-information")
     @Transactional
-    public ResponseEntity<?> deleteProductByIdEndpoint(@RequestBody DTOUpdatedProduct productDTO){
+    public ResponseEntity<?> updateProductInformation(@RequestBody DTOUpdatedProduct productDTO){
         return ResponseEntity.accepted().body(productService.updateProductInfos(productDTO));
     }
 }
