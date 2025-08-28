@@ -43,7 +43,7 @@ public class ProductController {
     @GetMapping
     @RequestMapping("/all-products/{id}")
     public ResponseEntity<List<DTOListedProduct>> allProductsEndpoint(@PathVariable Long id){
-        return ResponseEntity.ok().body(productService.allProductsById(id));
+        return ResponseEntity.ok().body(productService.allProductsByIdCategory(id));
     }
 
     @DeleteMapping

@@ -37,7 +37,7 @@ public class ProductService {
         return productRepository.findAll().stream().map(DTOListedProduct::new).toList();
     }
 
-    public List<DTOListedProduct> allProductsById(Long id){
+    public List<DTOListedProduct> allProductsByIdCategory(Long id){
         List<DTOListedProduct> productById = new ArrayList<>();
         Category category = new Category(new CategoryDTO(id));
         for (DTOListedProduct product : allProducts()){
