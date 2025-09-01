@@ -1,5 +1,6 @@
 package com.Project.Ecommerce.Entities;
 
+import com.Project.Ecommerce.DTOs.DTORegisterCustomer;
 import jakarta.persistence.*;
 
 import java.lang.reflect.Array;
@@ -26,6 +27,13 @@ public class Customer {
         this.username = username;
         this.email = email;
         this.password = password;
+    }
+
+    public Customer(DTORegisterCustomer customer){
+        this.id = customer.id();
+        this.username = customer.username();
+        this.email = customer.email();
+        this.password = customer.password();
     }
 
     public Long getId() {
