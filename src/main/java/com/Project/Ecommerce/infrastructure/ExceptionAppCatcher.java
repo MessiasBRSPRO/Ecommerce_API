@@ -1,10 +1,7 @@
 package com.Project.Ecommerce.infrastructure;
 
-import com.Project.Ecommerce.Exceptions.ExceptionBody;
-import com.Project.Ecommerce.Exceptions.NoExistentCategoryException;
-import com.Project.Ecommerce.Exceptions.NoExistentProductException;
+import com.Project.Ecommerce.Exceptions.*;
 import jakarta.servlet.http.HttpServletRequest;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -36,5 +33,17 @@ public class ExceptionAppCatcher {
     {
         String msg = "Not found resource";
         return ResponseEntity.status(404).body(new ExceptionBody(Instant.now(), 404, msg, e.getMessage(), path.getRequestURI()));
+    }
+
+    @ExceptionHandler(UsernameCustomerException.class)
+    public ResponseEntity<ExceptionBody> existentDataException(UsernameCustomerException e, HttpServletRequest path){
+        String msg = "existent attribute value";
+        return ResponseEntity.status(409).body(new ExceptionBody(Instant.now(), 409, msg, e.getMessage(), path.getRequestURI()));
+    }
+
+    @ExceptionHandler(EmailCustomerException.class)
+    public ResponseEntity<ExceptionBody> existentDataException(EmailCustomerException e, HttpServletRequest path){
+        String msg = "existent attribute value";
+        return ResponseEntity.status(409).body(new ExceptionBody(Instant.now(), 409, msg, e.getMessage(), path.getRequestURI()));
     }
 }
