@@ -1,6 +1,7 @@
 package com.Project.Ecommerce.Services;
 
 import com.Project.Ecommerce.DTOs.DTORegisterCustomer;
+import com.Project.Ecommerce.Entities.Cart;
 import com.Project.Ecommerce.Entities.Customer;
 import com.Project.Ecommerce.Exceptions.UsernameCustomerException;
 import com.Project.Ecommerce.Exceptions.EmailCustomerException;
@@ -14,14 +15,21 @@ public class CustomerService {
     @Autowired
     private CustomerRepository customerRepository;
 
+    @Autowired
+    private CartService cartService;
 
-    public Customer createCustomer(DTORegisterCustomer customer){
+    public void createCustomer(DTORegisterCustomer customer){
         if(customerRepository.existsByUsername(customer.username())){
             throw new UsernameCustomerException("this username are in use");
         }else if(customerRepository.existsByEmail(customer.email())){
             throw new EmailCustomerException("this email are in use");
         }
-        return customerRepository.save(new Customer(customer));
+        Customer registeredCustomer = new Customer(customer);
+        customerRepository.save(registeredCustomer);
+        savingCartToCustomer(registeredCustomer);
     }
 
+    private void savingCartToCustomer(Customer customer){
+        cartService.saveCart(new Cart(customer));
+    }
 }
