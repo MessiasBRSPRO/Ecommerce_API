@@ -20,6 +20,8 @@ public class Customer {
 
     private String password;
 
+    @OneToOne(mappedBy = "customer", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Cart myCart;
     public Customer(){}
 
     public Customer(Long id, String username, String email, String password){
@@ -27,6 +29,7 @@ public class Customer {
         this.username = username;
         this.email = email;
         this.password = password;
+        this.myCart = new Cart(this);
     }
 
     public Customer(DTORegisterCustomer customer){
@@ -34,6 +37,7 @@ public class Customer {
         this.username = customer.username();
         this.email = customer.email();
         this.password = customer.password();
+        this.myCart = customer.cart();
     }
 
     public Long getId() {
@@ -62,5 +66,9 @@ public class Customer {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public Cart getMyCart() {
+        return myCart;
     }
 }
